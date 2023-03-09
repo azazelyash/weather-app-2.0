@@ -35,7 +35,7 @@ class _HomescreenState extends State<Homescreen> {
 
   /* ---------------------------------- Theme --------------------------------- */
 
-  String imageUrl = "assets/backgrounds/cloudy.png";
+  String imageUrl = kCloudy;
   Color themeColor = kCloudyColor;
   Color themeColorText = kCloudyColorText;
   Color searchBarBackground = kCloudyColorText;
@@ -46,9 +46,9 @@ class _HomescreenState extends State<Homescreen> {
 
   String dateDay1 = "08 Mar, 2023";
   String tempDay1 = "25";
-  String iconUrlDay1 = "assets/icons/sunny.png";
+  String iconUrlDay1 = kCloudyIcon;
   String adjectiveDay1 = "Hot";
-  String location = "Noida, India";
+  String location = "";
   String windSpeed = "8.8";
   String humidity = "88.6";
   String description = "";
@@ -57,35 +57,35 @@ class _HomescreenState extends State<Homescreen> {
 
   String dateDay2 = "08/03";
   String tempDay2 = "25";
-  String iconUrlDay2 = "assets/icons/sunny.png";
+  String iconUrlDay2 = kColdIcon;
   String adjectiveDay2 = "Hot";
 
   /* ------------------------------- Day 3 Data ------------------------------- */
 
   String dateDay3 = "09/03";
   String tempDay3 = "25";
-  String iconUrlDay3 = "assets/icons/sunny.png";
+  String iconUrlDay3 = kColdIcon;
   String adjectiveDay3 = "Hot";
 
   /* ------------------------------- Day 4 Data ------------------------------- */
 
   String dateDay4 = "10/03";
   String tempDay4 = "25";
-  String iconUrlDay4 = "assets/icons/sunny.png";
+  String iconUrlDay4 = kColdIcon;
   String adjectiveDay4 = "Hot";
 
   /* ------------------------------- Day 5 Data; ------------------------------ */
 
   String dateDay5 = "11/03";
   String tempDay5 = "25";
-  String iconUrlDay5 = "assets/icons/sunny.png";
+  String iconUrlDay5 = kColdIcon;
   String adjectiveDay5 = "Hot";
 
   /* ------------------------------- Day 6 Data ------------------------------- */
 
   String dateDay6 = "12/03";
   String tempDay6 = "25";
-  String iconUrlDay6 = "assets/icons/sunny.png";
+  String iconUrlDay6 = kColdIcon;
   String adjectiveDay6 = "Hot";
 
   /* --------------------------- Update UI Function --------------------------- */
@@ -102,6 +102,51 @@ class _HomescreenState extends State<Homescreen> {
       windSpeed = weatherData["days"][0]["windspeed"].toString();
       location = weatherData["timezone"];
       description = weatherData["description"];
+      imageUrl = weather.getBackgroundURL(
+        double.parse(tempDay1),
+        weatherData["days"][0]["humidity"],
+      );
+
+      iconUrlDay1 = weather.getIconURl(
+          double.parse(tempDay1), weatherData["days"][0]["humidity"]);
+
+      if (imageUrl == kSunny) {
+        themeColor = kSunnyColor;
+        themeColorText = kSunnyColorText;
+        searchBarBackground = kSunnyColorText;
+        searchBarIconColor = kSunnyColor;
+        searchBarButtonColor = kSunnyColor.withOpacity(1);
+      } else if (imageUrl == kModerate) {
+        themeColor = kModerateColor;
+        themeColorText = kModerateColorText;
+        searchBarBackground = kModerateColorText;
+        searchBarIconColor = kModerateColor;
+        searchBarButtonColor = kModerateColor.withOpacity(1);
+      } else if (imageUrl == kCloudy) {
+        themeColor = kCloudyColor;
+        themeColorText = kCloudyColorText;
+        searchBarBackground = kCloudyColorText;
+        searchBarIconColor = kCloudyColor;
+        searchBarButtonColor = kCloudyColor.withOpacity(1);
+      } else if (imageUrl == kRainy) {
+        themeColor = kRainyColor;
+        themeColorText = kRainyColorText;
+        searchBarBackground = kRainyColorText;
+        searchBarIconColor = kRainyColor;
+        searchBarButtonColor = kRainyColor.withOpacity(1);
+      } else if (imageUrl == kCold) {
+        themeColor = kColdColor;
+        themeColorText = kColdColorText;
+        searchBarBackground = kColdColorText;
+        searchBarIconColor = kColdColor;
+        searchBarButtonColor = kColdColor.withOpacity(1);
+      } else {
+        themeColor = kSnowyColor;
+        themeColorText = kSnowyColorText;
+        searchBarBackground = kSnowyColorText;
+        searchBarIconColor = kSnowyColor;
+        searchBarButtonColor = kSnowyColor.withOpacity(1);
+      }
 
       /* ---------------------------- Update Data Day2 ---------------------------- */
 
@@ -109,6 +154,8 @@ class _HomescreenState extends State<Homescreen> {
           .parse(weatherData["days"][1]["datetime"] + " 00:00:00");
       dateDay2 = DateFormat('Md').format(tempDate).toString();
       tempDay2 = convertToCelcius(weatherData["days"][1]["temp"]);
+      iconUrlDay2 = weather.getIconURl(
+          double.parse(tempDay2), weatherData["days"][1]["humidity"]);
 
       /* ---------------------------- Update Data Day3 ---------------------------- */
 
@@ -116,6 +163,8 @@ class _HomescreenState extends State<Homescreen> {
           .parse(weatherData["days"][2]["datetime"] + " 00:00:00");
       dateDay3 = DateFormat('Md').format(tempDate).toString();
       tempDay3 = convertToCelcius(weatherData["days"][2]["temp"]);
+      iconUrlDay3 = weather.getIconURl(
+          double.parse(tempDay3), weatherData["days"][2]["humidity"]);
 
       /* ---------------------------- Update Data Day4 ---------------------------- */
 
@@ -123,6 +172,8 @@ class _HomescreenState extends State<Homescreen> {
           .parse(weatherData["days"][3]["datetime"] + " 00:00:00");
       dateDay4 = DateFormat('Md').format(tempDate).toString();
       tempDay4 = convertToCelcius(weatherData["days"][3]["temp"]);
+      iconUrlDay4 = weather.getIconURl(
+          double.parse(tempDay4), weatherData["days"][3]["humidity"]);
 
       /* ---------------------------- Update Data Day5 ---------------------------- */
 
@@ -130,6 +181,8 @@ class _HomescreenState extends State<Homescreen> {
           .parse(weatherData["days"][4]["datetime"] + " 00:00:00");
       dateDay5 = DateFormat('Md').format(tempDate).toString();
       tempDay5 = convertToCelcius(weatherData["days"][4]["temp"]);
+      iconUrlDay5 = weather.getIconURl(
+          double.parse(tempDay5), weatherData["days"][4]["humidity"]);
 
       /* ---------------------------- Update Data Day6 ---------------------------- */
 
@@ -137,6 +190,8 @@ class _HomescreenState extends State<Homescreen> {
           .parse(weatherData["days"][5]["datetime"] + " 00:00:00");
       dateDay6 = DateFormat('Md').format(tempDate).toString();
       tempDay6 = convertToCelcius(weatherData["days"][5]["temp"]);
+      iconUrlDay6 = weather.getIconURl(
+          double.parse(tempDay6), weatherData["days"][5]["humidity"]);
     });
   }
 
@@ -247,7 +302,9 @@ class _HomescreenState extends State<Homescreen> {
                           adjective: adjectiveDay2,
                           themeColorText: themeColorText,
                         ),
-                        const SecondContainerDivider(),
+                        SecondContainerDivider(
+                          themeColor: themeColorText,
+                        ),
                         FiveDayForecast(
                           iconUrl: iconUrlDay3,
                           date: dateDay3,
@@ -255,7 +312,9 @@ class _HomescreenState extends State<Homescreen> {
                           adjective: adjectiveDay3,
                           themeColorText: themeColorText,
                         ),
-                        const SecondContainerDivider(),
+                        SecondContainerDivider(
+                          themeColor: themeColorText,
+                        ),
                         FiveDayForecast(
                           iconUrl: iconUrlDay4,
                           date: dateDay4,
@@ -263,7 +322,9 @@ class _HomescreenState extends State<Homescreen> {
                           adjective: adjectiveDay4,
                           themeColorText: themeColorText,
                         ),
-                        const SecondContainerDivider(),
+                        SecondContainerDivider(
+                          themeColor: themeColorText,
+                        ),
                         FiveDayForecast(
                           iconUrl: iconUrlDay5,
                           date: dateDay5,
@@ -271,7 +332,9 @@ class _HomescreenState extends State<Homescreen> {
                           adjective: adjectiveDay5,
                           themeColorText: themeColorText,
                         ),
-                        const SecondContainerDivider(),
+                        SecondContainerDivider(
+                          themeColor: themeColorText,
+                        ),
                         FiveDayForecast(
                           iconUrl: iconUrlDay6,
                           date: dateDay6,
