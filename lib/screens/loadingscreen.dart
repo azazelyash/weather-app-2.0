@@ -5,6 +5,7 @@ import 'package:weather_app_2/constants/constants.dart';
 import 'package:weather_app_2/screens/homescreen.dart';
 import 'package:weather_app_2/services/location.dart';
 import 'package:weather_app_2/services/weather.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});
@@ -18,7 +19,21 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    requestLocationPermission();
     geoLocationData();
+  }
+
+  void requestLocationPermission() async {
+    var status = await Permission.location.status;
+    if (status.isGranted) {
+      print("Permission is Granted");
+    } else if (status.isDenied) {
+      if (await Permission.location.request().isGranted) {
+        print("Permission was granted");
+      }
+    } else if (status.isPermanentlyDenied) {
+      openAppSettings();
+    }
   }
 
   void geoLocationData() async {
